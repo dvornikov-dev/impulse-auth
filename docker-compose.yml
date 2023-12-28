@@ -4,7 +4,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
-      target: development
+      target: production
     env_file:
       - .env
     ports:
@@ -14,7 +14,6 @@ services:
       - /app/node_modules
     depends_on:
       - db
-    command: yarn start:dev
   db:
     image: postgres:13-alpine
     restart: always
@@ -24,6 +23,6 @@ services:
       - '${POSTGRES_PORT}:${POSTGRES_PORT}'
     volumes:
       - db:/var/lib/postgresql/data
-  
+
 volumes:
   db:
