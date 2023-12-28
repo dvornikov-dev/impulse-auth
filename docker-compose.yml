@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
       context: .
       target: production
+    command: yarn start:prod
     env_file:
       - .env
     ports:
@@ -15,7 +16,7 @@ services:
     depends_on:
       - db
   db:
-    image: postgres:13-alpine
+    image: postgres:15-alpine
     restart: always
     env_file:
       - .env
