@@ -1,0 +1,29 @@
+services:
+  api:
+    container_name: api
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    env_file:
+      - .env
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    command: yarn start:dev
+  db:
+    image: postgres:13-alpine
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
+    volumes:
+      - db:/var/lib/postgresql/data
+  
+volumes:
+  db:
