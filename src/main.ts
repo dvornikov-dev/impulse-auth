@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -8,6 +8,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import AppConfig from './config/app.config';
 import { AppModule } from './app.module';
+import { AllExceptionsFilter } from './utils/exception.filter';
 
 function setupSwagger(app: INestApplication): void {
   const config = new DocumentBuilder()
@@ -32,6 +33,9 @@ async function bootstrap() {
   );
 
   app.useGlobalPipes(new ValidationPipe());
+
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
   const appConfig = app.get(AppConfig);
 
