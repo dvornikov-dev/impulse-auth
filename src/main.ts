@@ -3,10 +3,27 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { AppModule } from './app.module';
 import fastifyCookie from '@fastify/cookie';
-import { ValidationPipe } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import AppConfig from './config/app.config';
+import { AppModule } from './app.module';
+
+function setupSwagger(app: INestApplication): void {
+  const config = new DocumentBuilder()
+    .setTitle('Auth API')
+    .setDescription('The Auth API documentation')
+    .setVersion('1.0')
+    .addBasicAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config, {
+    deepScanRoutes: true,
+    operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
+  });
+
+  SwaggerModule.setup('swagger', app, document);
+}
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -23,6 +40,8 @@ async function bootstrap() {
   await app.register(fastifyCookie, {
     secret: cookieSecret,
   });
+
+  setupSwagger(app);
 
   const { port, host } = appConfig;
 
