@@ -23,13 +23,13 @@ COPY --chown=node:node --from=development /app/node_modules ./node_modules
 
 COPY --chown=node:node . .
 
+RUN npx prisma generate
+
 RUN yarn build
 
 ENV NODE_ENV production
 
 RUN yarn install --production && yarn cache clean
-
-RUN npx prisma generate
 
 USER node
 
