@@ -1,15 +1,21 @@
 ## Description
 
+Jwt authentication with NestJS, Prisma and PostgreSQL
+
 ## Running the app
 
 ```bash
-
-# watch mode
-$ docker compose up
-
+# setup .env file
+cp .env.example .env
 ```
 
-### App will be available on http://localhost:3000
+```bash
+$ docker compose up
+```
+
+### App is running at http://localhost:3000
+
+### Swagger docs at http://localhost:3000/swagger
 
 ## License
 
