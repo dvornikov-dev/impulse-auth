@@ -4,10 +4,13 @@ Jwt authentication with NestJS, Prisma and PostgreSQL
 
 ## Running the app
 
+1. Setup .env file
+
 ```bash
-# setup .env file
 cp .env.example .env
 ```
+
+2. Run docker compose
 
 ```bash
 $ docker compose up
