@@ -14,7 +14,7 @@ function setupSwagger(app: INestApplication): void {
     .setTitle('Auth API')
     .setDescription('The Auth API documentation')
     .setVersion('1.0')
-    .addBasicAuth()
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {

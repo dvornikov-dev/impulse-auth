@@ -24,6 +24,18 @@ class AppConfig {
   get cookieSecret(): string {
     return this.configService.getOrThrow('COOKIE_SECRET');
   }
+
+  get cookieMaxAge(): number {
+    return this.configService.getOrThrow('REFRESH_COOKIE_MAX_AGE');
+  }
+
+  get refreshTokenExpirationTime(): string {
+    return this.configService.getOrThrow('REFRESH_TOKEN_EXPIRATION_TIME');
+  }
+
+  get accessTokenExpirationTime(): string {
+    return this.configService.getOrThrow('ACCESS_TOKEN_EXPIRATION_TIME');
+  }
 }
 
 export default AppConfig;
